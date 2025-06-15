@@ -1,4 +1,4 @@
-package io.nihlen.scriptschunkloaders.mixin;
+package io.nihlen.chunkloadingminecarts.mixin;
 
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.vehicle.*;
@@ -10,8 +10,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import io.nihlen.scriptschunkloaders.ScriptsChunkLoadersMod;
-import io.nihlen.scriptschunkloaders.MinecartEntityExt;
+import io.nihlen.chunkloadingminecarts.ChunkloadingMinecartsMod;
+import io.nihlen.chunkloadingminecarts.MinecartEntityExt;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.nbt.NbtCompound;
@@ -40,23 +40,21 @@ public abstract class AbstractMinecartEntityMixin extends Entity implements Mine
 	@Inject(method = "<init>(Lnet/minecraft/entity/EntityType;Lnet/minecraft/world/World;DDD)V", at = @At("TAIL"))
 	private void injectConstructor(CallbackInfo callbackInfo) {
 		if (isChunkLoader) {
-			scripts_chunk_loaders$startChunkLoader();
+			chunkloading_minecarts$startChunkLoader();
 		}
 	}
 
-	public boolean scripts_chunk_loaders$isChunkLoader() {
+	public boolean chunkloading_minecarts$isChunkLoader() {
 		return this.isChunkLoader;
 	}
 
-	public void scripts_chunk_loaders$startChunkLoader() {
+	public void chunkloading_minecarts$startChunkLoader() {
 		if (this.getWorld().isClient) return;
 
 		this.isChunkLoader = true;
-
-		ScriptsChunkLoadersMod.LOGGER.info("Starting chunk loader in {}", this.getWorld().getRegistryKey().getValue());
 	}
 
-	public void scripts_chunk_loaders$setChunkLoaderNameFromInventory() {
+	public void chunkloading_minecarts$setChunkLoaderNameFromInventory() {
 		EntityType<?> minecartType = this.getType();
 
 		if (minecartType == EntityType.CHEST_MINECART) {
@@ -68,28 +66,28 @@ public abstract class AbstractMinecartEntityMixin extends Entity implements Mine
 			
 			if (!firstSlot.isEmpty() && hasCustomName) {
 				var name = firstSlot.getName().getString();
-				scripts_chunk_loaders$setChunkLoaderName(name);
+				chunkloading_minecarts$setChunkLoaderName(name);
 				return;
 			}
 		};
 
-		scripts_chunk_loaders$setChunkLoaderName("Chunk Loader");
+		chunkloading_minecarts$setChunkLoaderName("Chunk Loader");
 	}
 
-	public void scripts_chunk_loaders$setChunkLoaderName(String name) {
+	public void chunkloading_minecarts$setChunkLoaderName(String name) {
 		var nameText = Text.literal(name);
 		this.setCustomName(nameText);
 		this.setCustomNameVisible(true);
 	}
 
-	public void scripts_chunk_loaders$stopChunkLoader() {
-		scripts_chunk_loaders$stopChunkLoader(false);
+	public void chunkloading_minecarts$stopChunkLoader() {
+		chunkloading_minecarts$stopChunkLoader(false);
 		this.lastChunkPos = null;
 	}
-	public void scripts_chunk_loaders$stopChunkLoader(Boolean keepName) {
+	public void chunkloading_minecarts$stopChunkLoader(Boolean keepName) {
 		this.isChunkLoader = false;
 
-		ScriptsChunkLoadersMod.CHUNK_LOADER_MANAGER.removeChunkLoader(this);
+		ChunkloadingMinecartsMod.CHUNK_LOADER_MANAGER.removeChunkLoader(this);
 
 		if (!keepName) {
 			this.setCustomName(null);
@@ -114,8 +112,7 @@ public abstract class AbstractMinecartEntityMixin extends Entity implements Mine
 		var chunkPos = this.getChunkPos();
 		if (lastChunkPos == null || lastChunkPos != chunkPos) {
 			lastChunkPos = chunkPos;
-			ScriptsChunkLoadersMod.LOGGER.info("Re-registering chunk loader");
-			ScriptsChunkLoadersMod.CHUNK_LOADER_MANAGER.registerChunkLoader(this);
+			ChunkloadingMinecartsMod.CHUNK_LOADER_MANAGER.registerChunkLoader(this);
 		}
 
 		this.tickParticles();
@@ -124,7 +121,7 @@ public abstract class AbstractMinecartEntityMixin extends Entity implements Mine
 	@Override
 	public void remove(Entity.RemovalReason reason) {
 		if (isChunkLoader) {
-			this.scripts_chunk_loaders$stopChunkLoader();
+			this.chunkloading_minecarts$stopChunkLoader();
 		}
 
 		super.remove(reason);
@@ -134,12 +131,12 @@ public abstract class AbstractMinecartEntityMixin extends Entity implements Mine
 	public Entity teleportTo(TeleportTarget teleportTarget) {
 		var wasChunkLoader = isChunkLoader;
 		if (wasChunkLoader)
-			this.scripts_chunk_loaders$stopChunkLoader(true);
+			this.chunkloading_minecarts$stopChunkLoader(true);
 
 		var newEntity = super.teleportTo(teleportTarget);
 
 		if (wasChunkLoader && newEntity != null)
-			((AbstractMinecartEntityMixin)newEntity).scripts_chunk_loaders$startChunkLoader();
+			((AbstractMinecartEntityMixin)newEntity).chunkloading_minecarts$startChunkLoader();
 
 		return newEntity;
 	}

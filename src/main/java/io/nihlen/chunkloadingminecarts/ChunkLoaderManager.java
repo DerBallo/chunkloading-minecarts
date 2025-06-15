@@ -1,4 +1,4 @@
-package io.nihlen.scriptschunkloaders;
+package io.nihlen.chunkloadingminecarts;
 
 import it.unimi.dsi.fastutil.longs.LongSet;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
@@ -30,7 +30,6 @@ public class ChunkLoaderManager {
     }
 
     private void handlePendingRegistrations () {
-        ScriptsChunkLoadersMod.LOGGER.info("Handling pending registrations");
         pendingRegistrations.forEach(this::registerChunkLoader);
         pendingRegistrations.clear();
     }
@@ -44,7 +43,6 @@ public class ChunkLoaderManager {
         var chunkPos = entity.getChunkPos();
 
         removeChunkLoader(entity);
-        ScriptsChunkLoadersMod.LOGGER.info("Adding {} to {}", entity, entity.getWorld().getRegistryKey().getValue());
 
         var worldRegistryKey = entity.getWorld().getRegistryKey();
         var worldChunks = forceLoadedChunks.computeIfAbsent(worldRegistryKey, s -> new HashMap<>());
@@ -53,13 +51,11 @@ public class ChunkLoaderManager {
     }
 
     public void removeChunkLoader(Entity entity) {
-        ScriptsChunkLoadersMod.LOGGER.info("Removing {} from {}", entity, entity.getWorld().getRegistryKey().getValue());
         var uuid = entity.getUuid();
 
         var worldRegistryKey = entity.getWorld().getRegistryKey();
         var worldChunks = forceLoadedChunks.get(worldRegistryKey);
 
-        ScriptsChunkLoadersMod.LOGGER.info("worldChunks {}", worldChunks);
         if (worldChunks == null) return;
 
         var iterator = worldChunks.entrySet().iterator();
@@ -104,7 +100,9 @@ public class ChunkLoaderManager {
 
             if (!loadedChunks.contains(longPos)) {
                 // Load chunk
-                world.setChunkForced(chunkPos.x, chunkPos.z, true);
+                // world.setChunkForced(chunkPos.x, chunkPos.z, true);
+                var ticket = new ChunkTicket(ChunkloadingMinecartsMod.MINECART_TICKETTYPE, ServerChunkLoadingManager.FORCED_CHUNK_LEVEL);
++               world.getChunkManager().addTicket(ticket, chunkPos);
             }
         });
 
@@ -112,7 +110,8 @@ public class ChunkLoaderManager {
             var chunkPos = new ChunkPos(longPos);
             if (!currentChunks.contains(chunkPos)) {
                 // Unload chunk
-                world.setChunkForced(chunkPos.x, chunkPos.z, false);
+                // world.setChunkForced(chunkPos.x, chunkPos.z, false);
+                world.getChunkManager().removeTicket(ChunkloadingMinecartsMod.MINECART_TICKETTYPE, chunkPos, 2);
             }
         });
     }

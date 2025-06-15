@@ -1,6 +1,6 @@
-package io.nihlen.scriptschunkloaders.mixin;
+package io.nihlen.chunkloadingminecarts.mixin;
 
-import io.nihlen.scriptschunkloaders.MinecartEntityExt;
+import io.nihlen.chunkloadingminecarts.MinecartEntityExt;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.entity.BlockEntityType;
@@ -64,11 +64,11 @@ public class DispenserBlockMixin {
         for (AbstractMinecartEntity entity : list) {
             MinecartEntityExt cart = (MinecartEntityExt)entity;
 
-            if (cart.scripts_chunk_loaders$isChunkLoader()) {
-                cart.scripts_chunk_loaders$stopChunkLoader();
+            if (cart.chunkloading_minecarts$isChunkLoader()) {
+                cart.chunkloading_minecarts$stopChunkLoader();
             } else {
-                cart.scripts_chunk_loaders$startChunkLoader();
-                cart.scripts_chunk_loaders$setChunkLoaderNameFromInventory();
+                cart.chunkloading_minecarts$startChunkLoader();
+                cart.chunkloading_minecarts$setChunkLoaderNameFromInventory();
             }
         }
     }

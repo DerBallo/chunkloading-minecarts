@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.0.0](https://github.com/DerBallo/chunkloading-minecarts) (2025-06-14)
+
+
+### Bug Fixes
+
+* fixed this bug: (https://github.com/scriptcoded/scripts-chunk-loaders/pull/35)
+
+### Features
+
+* update to 1.21.4
+
 ## [0.3.1](https://github.com/scriptcoded/scripts-chunk-loaders/compare/v0.3.0...v0.3.1) (2024-06-21)
 
 

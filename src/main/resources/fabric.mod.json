@@ -1,26 +1,27 @@
 {
 	"schemaVersion": 1,
-	"id": "scripts-chunk-loaders",
+	"id": "chunkloadingminecarts",
 	"version": "${version}",
-	"name": "Script's Chunk Loaders",
+	"name": "Chunkloading Minecarts",
 	"description": "Make minecraft act as chunk loaders using redstone.",
 	"authors": [
-		"Malcolm Nihlen"
+		"Malcolm Nihlen",
+		"DerBallo"
 	],
 	"contact": {
 		"homepage": "https://github.com/scriptcoded/scripts-chunk-loaders",
 		"sources": "https://github.com/scriptcoded/scripts-chunk-loaders"
 	},
 	"license": "MIT",
-	"icon": "assets/scripts-chunk-loaders/icon.png",
+	"icon": "assets/chunkloadingminecarts/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"io.nihlen.scriptschunkloaders.ScriptsChunkLoadersMod"
+			"io.nihlen.chunkloadingminecarts.ChunkloadingMinecartsMod"
 		]
 	},
 	"mixins": [
-		"scripts-chunk-loaders.mixins.json"
+		"chunkloadingminecarts.mixins.json"
 	],
 	"depends": {
 		"fabricloader": ">=0.16.9",
