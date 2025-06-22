@@ -1,6 +1,6 @@
 package io.nihlen.chunkloadingminecarts.mixin;
 
-import io.nihlen.chunkloadingminecarts.MinecartEntityExt;
+import io.nihlen.chunkloadingminecarts.MinecartChunkloader;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.entity.BlockEntityType;
@@ -52,24 +52,18 @@ public class DispenserBlockMixin {
             }
         }
 
-        this.toggleMinecraftChunkLoader(world, state, pos);
+        this.toggleMinecartChunkLoader(world, state, pos);
         info.cancel();
     }
 
     @Unique
-    private void toggleMinecraftChunkLoader(ServerWorld world, BlockState state, BlockPos pos) {
+    private void toggleMinecartChunkLoader(ServerWorld world, BlockState state, BlockPos pos) {
         BlockPos blockPos = pos.offset(state.get(DispenserBlock.FACING));
         List<AbstractMinecartEntity> list = world.getEntitiesByClass(AbstractMinecartEntity.class, new Box(blockPos), EntityPredicates.VALID_ENTITY);
 
         for (AbstractMinecartEntity entity : list) {
-            MinecartEntityExt cart = (MinecartEntityExt)entity;
-
-            if (cart.chunkloading_minecarts$isChunkLoader()) {
-                cart.chunkloading_minecarts$stopChunkLoader();
-            } else {
-                cart.chunkloading_minecarts$startChunkLoader();
-                cart.chunkloading_minecarts$setChunkLoaderNameFromInventory();
-            }
+            MinecartChunkloader cart = (MinecartChunkloader)entity;
+            cart.chunkloading_minecarts$toggleChunkLoader();
         }
     }
 }

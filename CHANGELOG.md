@@ -3,13 +3,29 @@
 ## [1.0.0](https://github.com/DerBallo/chunkloading-minecarts) (2025-06-14)
 
 
+### Complete rewrite of the codebase
+
+### Changes:
+* Now using a custom chunk loading ticket type.
+* Added a gamerule to control the radius of chunks a chunkloader-minecart will load around itself.
+* Chunkloading is now exclusively controlled by the minecart itself instead of a class which keeps track of all the chunkloaders.
+* Chunkloading minecarts will now stop loading chunks on server restarts/crashes until they are manually loaded again.
+* Chunk loading tickets will expire 5 ticks after their creation and will only be refreshed once expired.
+* MASSIVE performance improvements.
+
+### Bug Fixes
+* The mod will now no longer remove any forceloaded chunks, including spawn chunks.
+
+## [0.3.2]
+
+
 ### Bug Fixes
 
 * fixed this bug: (https://github.com/scriptcoded/scripts-chunk-loaders/pull/35)
 
 ### Features
 
-* update to 1.21.4
+* **version:** update to 1.21.4
 
 ## [0.3.1](https://github.com/scriptcoded/scripts-chunk-loaders/compare/v0.3.0...v0.3.1) (2024-06-21)
 

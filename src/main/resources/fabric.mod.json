@@ -5,8 +5,8 @@
 	"name": "Chunkloading Minecarts",
 	"description": "Make minecraft act as chunk loaders using redstone.",
 	"authors": [
-		"Malcolm Nihlen",
-		"DerBallo"
+		"DerBallo",
+		"Malcolm Nihlen"
 	],
 	"contact": {
 		"homepage": "https://github.com/scriptcoded/scripts-chunk-loaders",

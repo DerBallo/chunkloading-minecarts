@@ -1,11 +1,19 @@
-# Script's Chunk Loaders
+# Chunkloading Minecarts
 
-> Make minecarts act as chunk loaders using redstone.
+Make minecarts act as chunk loaders using redstone.
 
-All information is [available on Modrinth](https://modrinth.com/mod/scripts-chunk-loaders).
+## How to use it?
 
-🙏 Currently the deployment setup for [all of my mods](https://modrinth.com/collection/7JZGuXDg)
-(not a lot right now) is quite odd. I can't release older versions easily and I
-have to bump the mod version to update the Minecraft version. If you have
-experience with Minecraft modding and a good idea of how to automate this in a
-better way, please feel free to [reach out](https://github.com/scriptcoded).
+***Minecarts will only load chunks after you manually (or by using redstone) enabled them.***
+
+First create a "chunk loader creator" by putting the following pattern in a dispenser. When powered, any minecart in front of it will toggle its chunk loading ability:
+- If the minecart is an active chunkloader, it will emit particles and have a display name (Default: "Chunk Loader").
+- If the minecart has an inventory (Chest Minecart or Hopper Minecart) and the first item has been renamed in an anvil, the display name will be that of the item.
+
+![Image unavailable](https://i.imgur.com/bG5sBpA.png)
+
+## Customization
+
+You can change the radius in which chunks around the minecart will be loaded by changing the "minecartTicketRadius" gamerule to any value between 1 and 16, 1 meaning only the current chunk the minecart is in will be loaded.
+
+A chunk loading ticket created by a minecart will always expire 5 ticks after it's creation and will only be refreshed once expired.
