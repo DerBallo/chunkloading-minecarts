@@ -3,21 +3,21 @@
 	"id": "chunkloadingminecarts",
 	"version": "${version}",
 	"name": "Chunkloading Minecarts",
-	"description": "Make minecraft act as chunk loaders using redstone.",
+	"description": "Make minecraft act as chunk loaders using redstone. Originally a fork of 'scripts-chunk-loaders', then almost completely rewritten.",
 	"authors": [
 		"DerBallo",
 		"Malcolm Nihlen"
 	],
 	"contact": {
-		"homepage": "https://github.com/scriptcoded/scripts-chunk-loaders",
-		"sources": "https://github.com/scriptcoded/scripts-chunk-loaders"
+		"homepage": "https://github.com/DerBallo/chunkloading-minecarts",
+		"sources": "https://github.com/DerBallo/chunkloading-minecarts"
 	},
 	"license": "MIT",
 	"icon": "assets/chunkloadingminecarts/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"io.nihlen.chunkloadingminecarts.ChunkloadingMinecartsMod"
+			"net.derballo.chunkloadingminecarts.ChunkloadingMinecartsMod"
 		]
 	},
 	"mixins": [

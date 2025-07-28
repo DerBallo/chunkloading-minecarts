@@ -1,15 +1,13 @@
 {
 	"required": true,
 	"minVersion": "0.8",
-	"package": "io.nihlen.chunkloadingminecarts.mixin",
+	"package": "net.derballo.chunkloadingminecarts.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [],
 	"client": [
-		"DispenserBlockMixin",
 		"AbstractMinecartEntityMixin"
 	],
 	"server": [
-		"DispenserBlockMixin",
 		"AbstractMinecartEntityMixin"
 	],
 	"injectors": {

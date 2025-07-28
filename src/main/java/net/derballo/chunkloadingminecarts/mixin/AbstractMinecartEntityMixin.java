@@ -1,4 +1,4 @@
-package io.nihlen.chunkloadingminecarts.mixin;
+package net.derballo.chunkloadingminecarts.mixin;
 
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.vehicle.*;
@@ -8,8 +8,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import io.nihlen.chunkloadingminecarts.ChunkloadingMinecartsMod;
-import io.nihlen.chunkloadingminecarts.MinecartChunkloader;
+import net.derballo.chunkloadingminecarts.ChunkloadingMinecartsMod;
+import net.derballo.chunkloadingminecarts.MinecartChunkloader;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.nbt.NbtCompound;
@@ -21,11 +21,8 @@ import net.minecraft.world.World;
 
 @Mixin(AbstractMinecartEntity.class)
 public abstract class AbstractMinecartEntityMixin extends Entity implements MinecartChunkloader {
-
 	@Unique
 	private boolean isChunkLoader = false;
-	@Unique
-	private int particleTicker = 0;
 	@Unique
 	private int chunkTicketExpiryTicks = 0;
 	@Unique
@@ -71,9 +68,7 @@ public abstract class AbstractMinecartEntityMixin extends Entity implements Mine
 					chunkLoaderName = firstSlot.getName().getString();
 				}
 			}
-
-			var nameText = Text.literal(chunkLoaderName);
-			this.setCustomName(nameText);
+			this.setCustomName(Text.literal(chunkLoaderName));
 			this.setCustomNameVisible(true);
 		}
 		else
@@ -103,27 +98,12 @@ public abstract class AbstractMinecartEntityMixin extends Entity implements Mine
 			if ((--this.chunkTicketExpiryTicks <= 0) || (this.lastChunkPos != chunkPos))
 			{
 				((ServerWorld)world).getChunkManager().addTicket(ChunkloadingMinecartsMod.MINECART, chunkPos, ChunkloadingMinecartsMod.MINECART_TICKET_RADIUS + 1, chunkPos);
-				this.chunkTicketExpiryTicks = 5; //ChunkloadingMinecartsMod.MINECART_TICKET_EXPIRY;
+				this.chunkTicketExpiryTicks = 5;
 				this.lastChunkPos = chunkPos;
 			}
 
-			this.particleTicker += 1;
-			if (this.particleTicker >= 3/*particleInterval*/) {
-				this.particleTicker = 0;
-				AbstractMinecartEntity entity = (AbstractMinecartEntity)(Object)this;
-				((ServerWorld)world).spawnParticles(ParticleTypes.HAPPY_VILLAGER, entity.getX(), entity.getY(), entity.getZ(), 1, 0.25, 0.25, 0.25, 0.15f);
-			}
-		};
+			AbstractMinecartEntity entity = (AbstractMinecartEntity)(Object)this;
+			((ServerWorld)world).spawnParticles(ParticleTypes.PORTAL, entity.getX(), entity.getY() + 0.1, entity.getZ(), 2, 0.1, 0.1, 0.1, 0.4f);
+		}
 	}
-
-//	@Override
-//	public Entity teleportTo(TeleportTarget teleportTarget) {
-//
-//		var newEntity = super.teleportTo(teleportTarget);
-//
-//		if (newEntity != null)
-//			((AbstractMinecartEntityMixin)newEntity).chunkloading_minecarts$startChunkLoader();
-//
-//		return newEntity;
-//	}
 }
