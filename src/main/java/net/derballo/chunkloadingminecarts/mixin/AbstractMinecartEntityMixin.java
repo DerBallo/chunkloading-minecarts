@@ -1,6 +1,5 @@
 package net.derballo.chunkloadingminecarts.mixin;
 
-import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.vehicle.*;
 import net.minecraft.storage.ReadView;
 import net.minecraft.storage.WriteView;
@@ -16,11 +15,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.text.Text;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
-
-import java.util.Optional;
 
 @Mixin(AbstractMinecartEntity.class)
 public abstract class AbstractMinecartEntityMixin extends Entity implements MinecartChunkloader {
