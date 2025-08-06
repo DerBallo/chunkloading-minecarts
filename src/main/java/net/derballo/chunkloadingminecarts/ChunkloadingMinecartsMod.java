@@ -11,10 +11,11 @@ import net.minecraft.entity.vehicle.AbstractMinecartEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.predicate.entity.EntityPredicates;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.server.world.ChunkTicketType;
 import net.minecraft.util.math.*;
 import net.minecraft.block.DispenserBlock;
-import java.util.Comparator;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
@@ -48,7 +49,7 @@ public class ChunkloadingMinecartsMod implements ModInitializer {
             })
     );
 
-    public static final ChunkTicketType<ChunkPos> MINECART = ChunkTicketType.create("minecart", Comparator.comparingLong(ChunkPos::toLong), 5);
+    public static final ChunkTicketType MINECART = Registry.register(Registries.TICKET_TYPE, "minecart", new ChunkTicketType(5, false, ChunkTicketType.Use.LOADING_AND_SIMULATION));
 
     @Override
     public void onInitialize() {

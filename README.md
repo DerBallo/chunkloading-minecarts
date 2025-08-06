@@ -6,9 +6,7 @@ Make minecarts act as chunk loaders using redstone.
 
 ***Minecarts will only load chunks after you manually (or by using redstone) enabled them.***
 
-First create a "chunk loader creator" by putting the following pattern in a dispenser. When powered, any minecart in front of it will toggle its chunk loading ability:
-- If the minecart is an active chunkloader, it will emit particles and have a display name (Default: "Chunk Loader").
-- If the minecart has an inventory (Chest Minecart or Hopper Minecart) and the first item has been renamed in an anvil, the display name will be that of the item.
+First create a "chunk loader creator" by putting the following pattern in a dispenser. When powered, any minecart in front of it will toggle its chunk loading ability. If the minecart is an active chunkloader, it will emit particles.
 
 ![Image unavailable](https://i.imgur.com/bG5sBpA.png)
 
