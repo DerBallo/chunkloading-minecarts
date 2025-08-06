@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.0.2](https://github.com/DerBallo/chunkloading-minecarts) (2025-08-07)
+
+### Changes:
+* Activating and deactivating a chunkloading minecart will no longer change it's name tag.
+
 ## [1.0.1](https://github.com/DerBallo/chunkloading-minecarts) (2025-07-28)
 
 ### Several small performance improvements, visual changes and code cleanups
